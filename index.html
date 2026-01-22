@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language Panel</title>
+    <style>
+        .lang-switcher {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            gap: 8px;
+            padding: 5px 10px;
+            background-color: rgba(0,0,0,0.6);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            z-index: 1000;
+        }
+
+        .lang-switcher button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px;
+            transition: transform 0.2s;
+        }
+
+        .lang-switcher button:hover {
+            transform: scale(1.2);
+        }
+
+        .lang-switcher img {
+            width: 32px;
+            height: 32px;
+            display: block;
+        }
+
+        .main-text {
+            margin-top: 160px;
+            margin-left: 900px;
+        }
+    </style>
+</head>
+<body>
+<div class="lang-switcher">
+  <button data-lang="en"><img src="Assets/en.png" alt="EN"></button>
+  <button data-lang="sw"><img src="Assets/sw.png" alt="SW"></button>
+  <button data-lang="ru"><img src="Assets/ru.png" alt="RU"></button>
+</div>
+
+<div class="main-text">
+    <h1 id="main-title"
+    data-en="Hello all"
+    data-ru="Привет всем"
+    data-sw="Hej allihopa"
+    >Hello all</h1>
+</div>
+
+</body>
+<script>
+const title = document.getElementById("main-title");
+
+function setLanguage(lang) {
+    const text = title.getAttribute("data-" + lang);
+    if(text) title.textContent = text;
+    localStorage.setItem("lang", lang);
+}
+
+const savedLang = localStorage.getItem("lang");
+if(savedLang) setLanguage(savedLang);
+
+document.querySelectorAll(".lang-switcher button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        setLanguage(btn.getAttribute("data-lang"));
+    });
+});
+</script>
+
+
+</html>
